@@ -3,33 +3,39 @@ public class Monitor {
 
 	private String BAL;
 	
-	private boolean available;
+	private int queue;
+	private int tete;
+	private int availableWrite;
+	private int availableRead;
 	
-	public Monitor(){
-		available = false; //Par défaut, il n'y a rien à lire
+	public Monitor(int taille){
+		
+		availableWrite = taille;
 	}
 	
-	public synchronized void deposer(String lettre){
-		while(available == true){
+	public synchronized void deposer(Character lettre){
+		while(availableWrite != 0){
 			try{
 				wait();
 			}catch(InterruptedException e){}
 		}
-		BAL = lettre; 
-		available = true;
+		BAL += lettre;
+		availableWrite -= 1;
+		availableRead += 1;
 		notifyAll();
 	}
 	
 	public synchronized void retirer(){
 
 		do{
-			while(available == false){
+			while(availableRead != 0){
 				try{
 					wait();
 				}catch(InterruptedException e){}
 			}
 			System.out.println(BAL);
-			available = false;
+			availableWrite += 1;
+			availableRead -= 1;
 			notifyAll();
 		}while(!BAL.equals("Q"));
 	}
