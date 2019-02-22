@@ -7,6 +7,11 @@ public class Consummer extends Thread{
 	
 	public void run(){
 		while(!isInterrupted()){
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if(moniteur.retirer() == 'Q'){
 				this.interrupt();
 			}
