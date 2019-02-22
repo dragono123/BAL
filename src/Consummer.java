@@ -6,6 +6,10 @@ public class Consummer extends Thread{
 	}
 	
 	public void run(){
-		moniteur.retirer();
+		while(!isInterrupted()){
+			if(moniteur.retirer() == 'Q'){
+				this.interrupt();
+			}
+		}
 	}
 }

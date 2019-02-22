@@ -9,11 +9,17 @@ public class Productor extends Thread{
 	
 	public void run(){
 		String lettre = new String();
-		do{
+		while(!this.isInterrupted()){
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("Entrer votre lettre :");
 			lettre = scanner.next();
-			moniteur.deposer(lettre);
-		}while(!lettre.equals("Q"));
+			for(int i = 0; i < lettre.length(); i++){
+				moniteur.deposer(lettre.charAt(i));
+				if(lettre.charAt(i) == 'Q'){
+					this.interrupt();
+					break;
+				}
+			}
+		}
 	}
 }
