@@ -1,19 +1,19 @@
 
-public class Consummer extends Thread{
+public class Consummer implements Runnable{
 	private Monitor moniteur;
 	public Consummer(Monitor moniteur){
 		this.moniteur = moniteur;
 	}
 	
 	public void run(){
-		while(!isInterrupted()){
+		while(!Thread.currentThread().isInterrupted()){
 			try {
-				sleep(100);
+				Thread.sleep(300);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if(moniteur.retirer() == 'Q'){
-				this.interrupt();
+			if(moniteur.retirer().equals("*")){
+				Thread.currentThread().interrupt();
 			}
 		}
 	}

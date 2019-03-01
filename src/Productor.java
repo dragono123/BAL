@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 
-public class Productor extends Thread{
+public class Productor implements Runnable{
 	private Monitor moniteur;
 	public Productor(Monitor moniteur){
 		this.moniteur = moniteur;
@@ -9,16 +9,18 @@ public class Productor extends Thread{
 	
 	public void run(){
 		String lettre = new String();
-		while(!this.isInterrupted()){
-			Scanner scanner = new Scanner(System.in);
+		int i = 0;
+		String[] lettres = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "*"};
+		while(!Thread.currentThread().isInterrupted()){
+			/*Scanner scanner = new Scanner(System.in);
 			System.out.println("Entrer votre lettre :");
 			lettre = scanner.next();
-			for(int i = 0; i < lettre.length(); i++){
-				moniteur.deposer(lettre.charAt(i));
-				if(lettre.charAt(i) == 'Q'){
-					this.interrupt();
-					break;
-				}
+			moniteur.deposer(lettre);*/
+			lettre = lettres[i++];
+			moniteur.deposer(lettre);
+			
+			if(lettre.equals("*")){
+				Thread.currentThread().interrupt();
 			}
 		}
 	}
