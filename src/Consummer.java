@@ -1,8 +1,10 @@
 
 public class Consummer implements Runnable{
 	private Monitor moniteur;
+	public static int nbConsummer;
 	public Consummer(Monitor moniteur){
 		this.moniteur = moniteur;
+		nbConsummer = 3;
 	}
 	
 	public void run(){
@@ -13,6 +15,8 @@ public class Consummer implements Runnable{
 				e.printStackTrace();
 			}
 			if(moniteur.retirer().equals("*")){
+				nbConsummer--;
+				System.out.println("Il reste " + nbConsummer + " consommateurs.");
 				Thread.currentThread().interrupt();
 			}
 		}

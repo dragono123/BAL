@@ -29,5 +29,4 @@ public class Monitor {
 		}
 		return lettre;
 	}
-	
 }
